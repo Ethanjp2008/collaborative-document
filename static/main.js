@@ -23,9 +23,42 @@ $(function () {
         });
     });
     // Write the code here
+    function syncDrawingData(data) {
 
-    text_area.addEventListener('keyup', messageSync)
-    select_element.addEventListener('change', select_color)
+        document.getElementById('text_area').value = data.textarea_value
+        
+        if(data.textarea_color == 'white'){
+            document.getElementById('text_area').style.backgroundColor = 'white'
+        }
+        if(data.textarea_color == 'red'){
+            document.getElementById('text_area').style.backgroundColor = 'red'
+        }
+        if(data.textarea_color == 'yellow'){
+            document.getElementById('text_area').style.backgroundColor = 'yellow'
+        }
+        if(data.textarea_color == 'green'){
+            document.getElementById('text_area').style.backgroundColor = 'green'
+        }
+
+    }
+
+    function messageSync(){
+
+        text = document.getElementById('text_area').value;
+
+        setTimeout(function(){
+            SettingSyncData()
+            },
+            1700);
+
+    }
+
+    function SettingSyncData(){
+        syncStream.publishMessage({
+            textarea_color:background_color,
+            textarea_value:text
+        });
+    }
 
     function select_color(){
         selected_color = document.getElementById('select').value;
@@ -42,36 +75,17 @@ $(function () {
         if (selected_color == 'green'){
             background_color = 'green'
         }
+
     }
 
-    function messageSync(){
-        text = document.getElementById('text_area').value;
-        setTimeout(function(){SettingSyncData()},1700);
-    }
+    text_area.addEventListener('keyup', messageSync)
+    select_element.addEventListener('change', select_color)
 
-    function SettingSyncData(){
-        syncStream.publishMessage({
-            textarea_color:background_color,
-            textarea_value:text
-        });
-    }
+    
 
-    function syncDrawingData(data) {
-        document.getElementById('text_area').value = data.textarea_value;
-        
-        if(data.textarea_color == 'white'){
-            document.getElementById('text_area').style.backgroundColor = 'white'
-        }
-        if(data.textarea_color == 'red'){
-            document.getElementById('text_area').style.backgroundColor = 'red'
-        }
-        if(data.textarea_color == 'yellow'){
-            document.getElementById('text_area').style.backgroundColor = 'yellow'
-        }
-        if(data.textarea_color == 'green'){
-            document.getElementById('text_area').style.backgroundColor = 'green'
-        }
-    }
+    
+
+    
 
 
 
